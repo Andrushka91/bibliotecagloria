@@ -75,6 +75,7 @@ const addItemToCart = (dispatch) => async (book) => {
             console.log("book.quantity:", book.quantity)
             if (isInTheCartCount === 0) {
                 books.push(book);
+                await AsyncStorage.setItem(key, JSON.stringify(books));
                 console.log("isInTheCartCount:", isInTheCartCount)
             } else {
                 await AsyncStorage.setItem(key, JSON.stringify(books));
