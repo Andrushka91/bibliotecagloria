@@ -1,12 +1,12 @@
-import { COLORS } from '../../consts/colors';
 import { StyleSheet } from 'react-native';
+import { COLORS } from '../../consts/colors';
 
 const styles = StyleSheet.create({
     header: {
         paddingVertical: 20,
         flexDirection: 'row',
-        alignItems: 'center',
-        marginHorizontal: 20,
+        marginHorizontal: 15,
+       
     },
     cartCard: {
         height: 100,
@@ -35,7 +35,8 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.purple,
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 30
+        textAlign: 'center',
+        borderRadius: 16,
     },
     emptyListStyle: {
         padding: 10,

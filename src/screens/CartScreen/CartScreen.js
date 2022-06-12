@@ -14,7 +14,7 @@ const CartScreen = ({ navigation }) => {
     const { state, fetchCartItems, emptyCart, updateItemsCart } = useContext(CartContext);
 
     useEffect(() => {
-        const unsub = navigation.addListener('focus', () => {fetchCartItems() })
+        const unsub = navigation.addListener('focus', () => { fetchCartItems() })
         return unsub
 
     }, [navigation])
@@ -37,7 +37,7 @@ const CartScreen = ({ navigation }) => {
     const EmptyListMessage = ({ item }) => {
         return (
             <Text style={styles.emptyListStyle} onPress={() => getItem(item)}>
-                Nu existe carti in cosul de cumparaturi
+                Nu există cărți in coșul de cumpăraturi
             </Text>
         );
     };
@@ -61,8 +61,12 @@ const CartScreen = ({ navigation }) => {
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
             <View style={styles.header}>
-                <Icon name="arrow-back-ios" size={20} onPress={() => navigation.navigate('Biblioteca')} />
-                <Text style={{ fontSize: 20, fontWeight: 'bold' }}>Cart</Text>
+                <View style={{ flex: 1, alignItems: 'flex-start',paddingVertical:3 }}>
+                    <Icon name="arrow-back-ios" size={20} onPress={() => navigation.navigate('Biblioteca')} />
+                </View>
+                <View style={{ flex: 2.6, alignItems: 'baseline' }}>
+                    <Text style={{ fontSize: 20, fontFamily: 'AllerLight', fontWeight: 'bold', }}>Coș de cumpărături</Text>
+                </View>
             </View>
             <FlatList
                 showsVerticalScrollIndicator={false}
@@ -80,7 +84,6 @@ const CartScreen = ({ navigation }) => {
                             book={item}
                         />
                 }
-
                 ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
                 ListFooterComponent={
                     () => (
@@ -92,17 +95,17 @@ const CartScreen = ({ navigation }) => {
                                     marginVertical: 15,
                                 }}>
                                 <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                                    Total
+                                    Total:
                                 </Text>
                                 <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€{state.totalPrice}</Text>
                             </View>
                             <View style={{ flexDirection: 'row', marginHorizontal: 10, justifyContent: 'space-between' }}>
                                 <View style={styles.buyBtn}>
-                                    <Text style={{ color: COLORS.white, fontSize: 18, fontWeight: 'bold' }}>Plateste</Text>
+                                    <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Plăteste</Text>
                                 </View>
                                 <TouchableOpacity onPress={() => clearCart()} >
                                     <View style={styles.buyBtn}>
-                                        <Text style={{ color: COLORS.white, fontSize: 18, fontWeight: 'bold' }}>Goleste cosul</Text>
+                                        <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Goleste cosul</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
@@ -111,7 +114,7 @@ const CartScreen = ({ navigation }) => {
                     )
                 }
             />
-        </SafeAreaView >
+        </SafeAreaView>
     );
 };
 

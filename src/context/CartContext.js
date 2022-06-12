@@ -42,7 +42,6 @@ const emptyCart = dispatch => async () => {
         dispatch({ type: 'empty_cart', payload: [] })
     } catch (err) {
         console.log(err);
-
     }
 }
 
@@ -72,11 +71,9 @@ const addItemToCart = (dispatch) => async (book) => {
         } else {
             let books = JSON.parse(data);
             let isInTheCartCount = checkBookInTheCart(book, books);
-            console.log("book.quantity:", book.quantity)
             if (isInTheCartCount === 0) {
                 books.push(book);
                 await AsyncStorage.setItem(key, JSON.stringify(books));
-                console.log("isInTheCartCount:", isInTheCartCount)
             } else {
                 await AsyncStorage.setItem(key, JSON.stringify(books));
                 ToastAndroid.show("Carte adăugată cu success in coș!", ToastAndroid.SHORT);
@@ -97,7 +94,6 @@ const checkBookInTheCart = (item, books) => {
             e.price = e.price + item.price;
         }
     })
-
     return count;
 }
 
@@ -115,7 +111,6 @@ const updateItemsCart = (dispatch) => async (books) => {
         console.log(err);
     }
 }
-
 
 const getTotalPrice = (books) => {
     let totalPrice = 0;

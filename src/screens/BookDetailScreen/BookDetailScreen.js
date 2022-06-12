@@ -27,11 +27,9 @@ const BookDetailScreen = ({ route, navigation }) => {
     if (type === '-') {
       book.quantity -= 1;
       book.price = book.price - initialPrice;
-      console.log("changeQuantity-", book.quantity)
     } else if (type === '+') {
       book.quantity += 1;
       book.price = book.price + initialPrice;
-      console.log("changeQuantity+", book.quantity)
     }
   }
   const minusIcon = (isDisabled) => {
@@ -65,7 +63,7 @@ const BookDetailScreen = ({ route, navigation }) => {
             {book.title}
           </Text>
           <View style={styles.priceTag}>
-            <Text style={{ marginLeft: 15, color: COLORS.white, fontWeight: 'bold', fontSize: 16 }}>€{book.price}</Text>
+            <Text style={{ marginLeft: 15, color: COLORS.white, fontFamily: 'AllerLight', fontSize: 18 }}>€{book.price}</Text>
           </View>
         </View>
         <View style={{ paddingHorizontal: 20, marginTop: 10 }}>
@@ -85,7 +83,7 @@ const BookDetailScreen = ({ route, navigation }) => {
             </View>
             <TouchableOpacity onPress={() => addBookAndUpdateList(book)}>
               <View style={styles.buyBtn}>
-                <Text style={{ color: COLORS.white, fontSize: 16, fontFamily: 'sans-serif-condensed' }}>Adaugă în coș</Text>
+                <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Adaugă în coș</Text>
               </View>
             </TouchableOpacity>
           </View>

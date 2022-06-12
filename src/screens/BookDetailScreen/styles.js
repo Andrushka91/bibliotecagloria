@@ -53,7 +53,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         borderRadius: 16,
-
     }
 });
 export default styles;
