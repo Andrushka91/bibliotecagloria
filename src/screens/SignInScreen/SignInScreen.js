@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Image,StyleSheet, Text, TextInput, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { COLORS_LOGIN } from '../../consts/colors';
 import { Context as AuthContext } from '../../context/AuthContext';
 import STYLES from '../../styles/index';
+
 const SignUpScreen = ({ navigation }) => {
   const { state, signIn, clearErrorMessage } = useContext(AuthContext)
   const [email, setEmail] = useState('');

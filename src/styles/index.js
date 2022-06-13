@@ -12,7 +12,9 @@ const STYLES = StyleSheet.create({
     flex: 1,
     fontSize: 18,
   },
-  inputIcon: { marginTop: 7, position: 'absolute' },
+  inputIcon: {
+     marginTop: (Platform.OS === 'ios') ? 0 : 6, 
+     position: 'absolute' },
   btnPrimary: {
     backgroundColor: COLORS_LOGIN.primary,
     height: 50,

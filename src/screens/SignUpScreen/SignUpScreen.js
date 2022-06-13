@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Image, SafeAreaView, Text, TextInput, View } from 'react-native';
+import { Image, Text, TextInput, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import 'react-native-gesture-handler';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';

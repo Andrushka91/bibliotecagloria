@@ -1,6 +1,7 @@
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useContext, useEffect } from 'react';
-import { Dimensions, FlatList, SafeAreaView, Text, View } from "react-native";
+import { Dimensions, FlatList,  Text, View } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { Icon } from 'react-native-elements';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { withNavigation } from "react-navigation";

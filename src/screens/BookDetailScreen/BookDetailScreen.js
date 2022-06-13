@@ -1,6 +1,7 @@
 import { AntDesign } from '@expo/vector-icons';
 import { useContext } from "react";
-import { Image, SafeAreaView, Text, View } from "react-native";
+import { Image, Text, View } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { withNavigation } from "react-navigation";
 import Counter from "react-native-counters";
 import { Icon } from 'react-native-elements';
