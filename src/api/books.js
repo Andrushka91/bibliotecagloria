@@ -2,7 +2,7 @@ import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const instance = axios.create({
-  baseURL: 'https://1bf6-2a0c-5a81-8304-6400-8063-321c-bd8e-53e0.eu.ngrok.io'
+  baseURL: 'http://196b-2a0c-5a81-8304-6400-99c2-2965-fde0-aba8.ngrok.io'
 })
 
 instance.interceptors.request.use(

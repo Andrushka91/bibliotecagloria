@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
 import { COLORS } from "../../consts/colors";
 const styles = StyleSheet.create({
     header: {
@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     categoryText: {
       fontSize: 16,
       color: 'grey',
-      fontWeight: 'bold'
     },
     categoryTextSelected: {
       color: COLORS.purple,

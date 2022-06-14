@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
-import { FlatList, Text, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList, Image, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { withNavigation } from "react-navigation";
 import CartCard from '../../components/CartCard/CartCard';
 import { COLORS } from '../../consts/colors';
@@ -34,22 +34,24 @@ const CartScreen = ({ navigation }) => {
     const clearCart = () => {
         emptyCart();
     }
-
     const EmptyListMessage = ({ item }) => {
         return (
-            <Text style={styles.emptyListStyle} onPress={() => getItem(item)}>
-                Nu există cărți in coșul de cumpăraturi
-            </Text>
+            <View style={{
+                justifyContent: 'center', alignItems: 'center',
+            }}>
+                <Image style={{ resizeMode: 'contain', height: 150 }} source={require('../../assets/empty-cart-message.png')} />
+                <Text style={styles.emptyListStyle} onPress={() => getItem(item)}>
+                    Coșul tău este gol
+                </Text>
+            </View>
         );
     };
-
     const onAddQuantity = (item, index, initialPrice) => {
         const cartItems = [...state.books];
         cartItems[index].quantity += 1;
         cartItems[index].price = initialPrice * cartItems[index].quantity;
         updateItemsCart(cartItems);
     }
-
     const onSubstractQuantity = (item, index, initialPrice) => {
         console.log("CartScreenStateOnSub1:")
         const cartItems = [...state.books];
@@ -58,15 +60,14 @@ const CartScreen = ({ navigation }) => {
         updateItemsCart(cartItems);
     }
 
-
     return (
         <SafeAreaView style={{ backgroundColor: COLORS.white, flex: 1 }}>
             <View style={styles.header}>
-                <View style={{ flex: 1, alignItems: 'flex-start',paddingVertical:3 }}>
+                <View style={{ flex: 1, alignItems: 'flex-start', paddingVertical: 3 }}>
                     <Icon name="arrow-back-ios" size={20} onPress={() => navigation.navigate('Biblioteca')} />
                 </View>
-                <View style={{ flex: 2.6, alignItems: 'baseline' }}>
-                    <Text style={{ fontSize: 20, fontFamily: 'AllerLight', fontWeight: 'bold', }}>Coș de cumpărături</Text>
+                <View style={{ flex: 1.2, alignItems: 'baseline' }}>
+                    <Text style={{ fontSize: 20, fontFamily: 'AllerLight', fontWeight: 'bold', }}>COȘ</Text>
                 </View>
             </View>
             <FlatList
@@ -88,30 +89,37 @@ const CartScreen = ({ navigation }) => {
                 ListFooterComponentStyle={{ paddingHorizontal: 20, marginTop: 20 }}
                 ListFooterComponent={
                     () => (
-                        <View>
-                            <View
-                                style={{
-                                    flexDirection: 'row',
-                                    justifyContent: 'space-between',
-                                    marginVertical: 15,
-                                }}>
-                                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
-                                    Total:
-                                </Text>
-                                <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€{state.totalPrice}</Text>
-                            </View>
-                            <View style={{ flexDirection: 'row', marginHorizontal: 10, justifyContent: 'space-between' }}>
-                                <View style={styles.buyBtn}>
-                                    <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Plăteste</Text>
+                        state.books ?
+                            (<View>
+                                <View
+                                    style={{
+                                        flexDirection: 'row',
+                                        justifyContent: 'space-between',
+                                        marginVertical: 15,
+                                    }}>
+                                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>
+                                        Total:
+                                    </Text>
+                                    <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€{state.totalPrice}</Text>
                                 </View>
-                                <TouchableOpacity onPress={() => clearCart()} >
+                                <View style={{ flexDirection: 'row', marginHorizontal: 4, justifyContent: 'space-between' }}>
                                     <View style={styles.buyBtn}>
-                                        <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Goleste cosul</Text>
+                                        <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Plătește</Text>
+                                    </View>
+                                    <TouchableOpacity onPress={() => clearCart()}>
+                                        <View style={styles.buyBtn}>
+                                            <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Șterge din coș</Text>
+                                        </View>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>)
+                            : <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+                                <TouchableOpacity onPress={() => navigation.navigate('Biblioteca')}>
+                                    <View style={styles.emptyListButton}>
+                                        <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Vezi cărțile disponibile</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
-
-                        </View>
                     )
                 }
             />

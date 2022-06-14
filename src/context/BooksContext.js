@@ -5,11 +5,18 @@ const bookReducer = (state, action) => {
   switch (action.type) {
     case 'fetch_books':
       return action.payload
+    case 'search_book':
+      return action.payload
     case 'empty_cart':
       return action.payload
     default:
       return state
   }
+}
+const searchBook = dispatch => async (title) => {
+  console.log("searchedTitle:", title);
+  const res = await booksApi.get('/search', { params: { title } })
+  dispatch({ type: 'search_book', payload: res.data })
 }
 
 const fetchBooks = dispatch => async () => {
@@ -23,6 +30,6 @@ const addBook = dispatch => async (name) => {
 
 export const { Provider, Context } = createDataContext(
   bookReducer,
-  { fetchBooks, addBook },
+  { addBook, fetchBooks, searchBook },
   []
 )

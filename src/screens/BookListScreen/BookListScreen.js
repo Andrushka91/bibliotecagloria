@@ -1,27 +1,31 @@
 import { FontAwesome } from '@expo/vector-icons';
-import React, { useContext, useEffect } from 'react';
-import { Dimensions, FlatList,  Text, View } from "react-native";
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { useContext, useEffect, useState } from 'react';
+import { Dimensions, FlatList, Text, View } from "react-native";
 import { Icon } from 'react-native-elements';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { withNavigation } from "react-navigation";
 import Card from '../../components/Card/Card';
 import { COLORS } from '../../consts/colors';
 import { Context as BooksContext } from '../../context/BooksContext';
 import styles from './styles';
 
-
 const width = Dimensions.get('screen').width / 2 - 30;
 
 const BooksListScreen = ({ navigation }) => {
   const categories = ['FAMILIE', 'SPIRITUALITATE', 'SANATATE', 'COPII'];
-  const [categoryIndex, selectCategoryIndex] = React.useState(0);
-  const { state, fetchBooks } = useContext(BooksContext);
-  
+
+  const [categoryIndex, selectCategoryIndex] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [text, onChangeText] = useState('');
+  const { state, fetchBooks, searchBook } = useContext(BooksContext);
+
   useEffect(() => {
     const unsub = navigation.addListener('focus', () => fetchBooks())
     return unsub
   }, [navigation])
+
+
 
   const CategoryList = ({ navigation }) => {
     return (
@@ -59,16 +63,20 @@ const BooksListScreen = ({ navigation }) => {
       <View style={{ marginTop: 30, flexDirection: "row" }}>
         <View style={styles.searchContainer}>
           <Icon name="search" size={25} style={{ marginLeft: 20 }} />
-          <TextInput placeholder="Search" style={styles.input} />
+          <TextInput onChangeText={onChangeText} value={text} placeholder="Search" style={styles.input} />
         </View>
-        <View style={styles.sortBtn}>
-          <Icon name="sort" size={30} color={COLORS.white} />
-        </View>
+        <TouchableOpacity onPress={() => { setIsLoading(true); searchBook(text); setIsLoading(false); }}>
+          <View style={styles.sortBtn}>
+            <Icon name="sort" size={30} color={COLORS.white} />
+          </View>
+        </TouchableOpacity>
       </View>
       <CategoryList />
       <FlatList
         columnWrapperStyle={{ justifyContent: 'space-between' }}
         showVerticalScrollIndicator={false}
+        // onRefresh={isLoading}
+        // refreshing={setSpinner(!spinner)}
         contentContainerStyle={{
           marginTop: 10,
           paddingBottom: 50

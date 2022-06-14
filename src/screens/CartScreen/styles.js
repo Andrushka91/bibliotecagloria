@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
         paddingVertical: 20,
         flexDirection: 'row',
         marginHorizontal: 15,
-       
     },
     cartCard: {
         height: 100,
@@ -30,7 +29,7 @@ const styles = StyleSheet.create({
         alignContent: 'center',
     },
     buyBtn: {
-        width: 150,
+        width: 170,
         height: 50,
         backgroundColor: COLORS.purple,
         justifyContent: 'center',
@@ -39,10 +38,21 @@ const styles = StyleSheet.create({
         borderRadius: 16,
     },
     emptyListStyle: {
-        padding: 10,
+        padding:10,
         fontSize: 18,
         textAlign: 'center',
     },
+
+    emptyListButton:{
+        width: 250,
+        height: 50,
+        backgroundColor: COLORS.purple,
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        borderRadius: 16,
+    }
+
 
 })
 export default styles;
