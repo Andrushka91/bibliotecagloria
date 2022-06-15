@@ -1,6 +1,6 @@
 import { FontAwesome } from '@expo/vector-icons';
 import { useContext, useEffect, useState } from 'react';
-import { Dimensions, FlatList, Text, View } from "react-native";
+import { Dimensions, FlatList, RefreshControl, Text, View } from 'react-native';
 import { Icon } from 'react-native-elements';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -16,8 +16,8 @@ const BooksListScreen = ({ navigation }) => {
   const categories = ['FAMILIE', 'SPIRITUALITATE', 'SANATATE', 'COPII'];
 
   const [categoryIndex, selectCategoryIndex] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
   const [text, onChangeText] = useState('');
+  const [refresh, setRefresh] = useState(false);
   const { state, fetchBooks, searchBook } = useContext(BooksContext);
 
   useEffect(() => {
@@ -25,6 +25,9 @@ const BooksListScreen = ({ navigation }) => {
     return unsub
   }, [navigation])
 
+  const refreshList = (value) => {
+    setRefresh(value);
+  }
 
 
   const CategoryList = ({ navigation }) => {
@@ -65,7 +68,7 @@ const BooksListScreen = ({ navigation }) => {
           <Icon name="search" size={25} style={{ marginLeft: 20 }} />
           <TextInput onChangeText={onChangeText} value={text} placeholder="Search" style={styles.input} />
         </View>
-        <TouchableOpacity onPress={() => { setIsLoading(true); searchBook(text); setIsLoading(false); }}>
+        <TouchableOpacity onPress={() => { searchBook(text, (value) => { refreshList(value) }); }}>
           <View style={styles.sortBtn}>
             <Icon name="sort" size={30} color={COLORS.white} />
           </View>
@@ -75,8 +78,13 @@ const BooksListScreen = ({ navigation }) => {
       <FlatList
         columnWrapperStyle={{ justifyContent: 'space-between' }}
         showVerticalScrollIndicator={false}
-        // onRefresh={isLoading}
-        // refreshing={setSpinner(!spinner)}
+        legacyImplementation={true}
+        refreshControl={
+          <RefreshControl
+            refreshing={refresh}
+            onRefresh={() => fetchBooks()}
+          />
+        }
         contentContainerStyle={{
           marginTop: 10,
           paddingBottom: 50

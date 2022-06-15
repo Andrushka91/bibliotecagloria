@@ -13,10 +13,12 @@ const bookReducer = (state, action) => {
       return state
   }
 }
-const searchBook = dispatch => async (title) => {
+const searchBook = dispatch => async (title, refreshList) => {
   console.log("searchedTitle:", title);
+  refreshList(true);
   const res = await booksApi.get('/search', { params: { title } })
   dispatch({ type: 'search_book', payload: res.data })
+  refreshList(false);
 }
 
 const fetchBooks = dispatch => async () => {
