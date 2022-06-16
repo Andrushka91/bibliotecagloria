@@ -3,8 +3,8 @@
   "packagerPid": null,
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "expoServerNgrokUrl": "https://8u-8jr.anonymous.biblioteca.exp.direct",
-  "packagerNgrokUrl": "https://8u-8jr.anonymous.biblioteca.exp.direct",
-  "ngrokPid": 13596,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null,
   "webpackServerPort": null
 }
