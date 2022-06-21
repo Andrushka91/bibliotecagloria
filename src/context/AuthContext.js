@@ -35,7 +35,10 @@ const clearErrorMessage = (dispatch) => () => {
 const signUp = (dispatch) => async ({ name, email, password }) => {
   try {
     const { data } = await booksApi.post('/signup', { name, email, password })
-    await AsyncStorage.setItem('token', data.token)
+    const user = await booksApi.get('/getUser', { headers: { 'token': data.token } })
+    await AsyncStorage.setItem('name', user.data.name);
+    await AsyncStorage.setItem('email', email);
+    await AsyncStorage.setItem('token', data.token);
 
     dispatch({ type: 'sign_in', payload: data.token })
   } catch (error) {
@@ -46,8 +49,12 @@ const signUp = (dispatch) => async ({ name, email, password }) => {
 const signIn = (dispatch) => async ({ email, password }) => {
   try {
     const { data } = await booksApi.post('/signin', { email, password })
-    await AsyncStorage.setItem('token', data.token)
-    await AsyncStorage.setItem('email', email)
+    const user = await booksApi.get('/getUser', { headers: { 'token': data.token } })
+    await AsyncStorage.setItem('name', user.data.name);
+    await AsyncStorage.setItem('email', email);
+    await AsyncStorage.setItem('token', data.token);
+    
+    console.log("loginData:", user.data);
     dispatch({ type: 'sign_in', payload: data.token })
   } catch (error) {
     dispatch({ type: 'add_error', payload: 'Something went wrong with sign in' })

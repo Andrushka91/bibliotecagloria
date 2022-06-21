@@ -12,7 +12,7 @@ import styles from './styles';
 const CartScreen = ({ navigation }) => {
     const [isFetching, setIsFetching] = useState(false);
 
-    const { state, fetchCartItems, emptyCart, updateItemsCart } = useContext(CartContext);
+    const { state, fetchCartItems, emptyCart, createOrder, updateItemsCart } = useContext(CartContext);
 
     useEffect(() => {
         const unsub = navigation.addListener('focus', () => { fetchCartItems() })
@@ -103,9 +103,11 @@ const CartScreen = ({ navigation }) => {
                                     <Text style={{ fontSize: 18, fontWeight: 'bold' }}>€{state.totalPrice}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', marginHorizontal: 4, justifyContent: 'space-between' }}>
-                                    <View style={styles.buyBtn}>
-                                        <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Plătește</Text>
-                                    </View>
+                                    <TouchableOpacity onPress={() => createOrder(state.books, state.totalPrice)}>
+                                        <View style={styles.buyBtn}>
+                                            <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Plătește</Text>
+                                        </View>
+                                    </TouchableOpacity>
                                     <TouchableOpacity onPress={() => clearCart()}>
                                         <View style={styles.buyBtn}>
                                             <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Șterge din coș</Text>

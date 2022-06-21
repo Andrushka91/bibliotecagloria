@@ -22,7 +22,7 @@ const searchBook = dispatch => async (title, refreshList) => {
 }
 
 const fetchBooks = dispatch => async () => {
-  const res = await booksApi.get('/books')
+  const res = await booksApi.get('/booksm')
   dispatch({ type: 'fetch_books', payload: res.data })
 }
 

@@ -1,6 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ToastAndroid } from 'react-native';
 import createDataContext from './createDataContext';
+import booksApi from '../api/books'
+import { v1 as uuid } from 'uuid';
 
 const cartReducer = (state, action) => {
     switch (action.type) {
@@ -120,8 +122,25 @@ const getTotalPrice = (books) => {
     return totalPrice;
 }
 
+const createOrder = (dispatch) => async (items, totalPrice) => {
+    const userName = await AsyncStorage.getItem('name');
+    const userEmail = await AsyncStorage.getItem('email');
+    let cartItems = [];
+    items.forEach((item) => {
+        cartItems.push({ id: item._id, quantity: item.quantity })
+    })
+
+    const orderId = uuid();
+    console.log("orderId:", orderId)
+    await booksApi.post('/order', { orderId, userName, userEmail, totalPrice, cartItems });
+
+    const key = userEmail + '_books';
+    await AsyncStorage.removeItem(key);
+    dispatch({ type: 'empty_cart', payload: [] })
+}
+
 export const { Provider, Context } = createDataContext(
     cartReducer,
-    { addItemToCart, fetchCartItems, emptyCart, updateItemsCart },
+    { addItemToCart, fetchCartItems, emptyCart, createOrder, updateItemsCart },
     []
 )
