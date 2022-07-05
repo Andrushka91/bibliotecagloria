@@ -46,16 +46,16 @@ const CartScreen = ({ navigation }) => {
             </View>
         );
     };
-    const onAddQuantity = (item, index, initialPrice) => {
+    const onAddQuantity = (index, initialPrice) => {
         const cartItems = [...state.books];
-        cartItems[index].quantity += 1;
-        cartItems[index].price = initialPrice * cartItems[index].quantity;
+        cartItems[index].cartQuantity += 1;
+        cartItems[index].price = initialPrice * cartItems[index].cartQuantity;
         updateItemsCart(cartItems);
     }
-    const onSubstractQuantity = (item, index, initialPrice) => {
+    const onSubstractQuantity = ( index, initialPrice) => {
         console.log("CartScreenStateOnSub1:")
         const cartItems = [...state.books];
-        cartItems[index].quantity -= 1;
+        cartItems[index].cartQuantity -= 1;
         cartItems[index].price -= initialPrice;
         updateItemsCart(cartItems);
     }

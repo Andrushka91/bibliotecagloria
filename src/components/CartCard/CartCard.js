@@ -9,21 +9,19 @@ const CartCard = ({ book, onAdd, onSubstract }) => {
     const [initialPrice, setInitialPrice] = useState(0);
    
     useEffect(() => {     
-        if (book.quantity > 1) {
-            setInitialPrice(book.price / book.quantity);
+        if (book.cartQuantity > 1) {
+            setInitialPrice(book.price / book.cartQuantity);
         } else {
             setInitialPrice(book.price);
         }
-        console.log("CartCardTestQuantity:", book.quantity)
+        console.log("CartCardTestQuantity:", book.cartQuantity)
     }, [])
 
     function changeQuantity(number, type) {
         if (type === '-') {
             onSubstract(initialPrice);
-            console.log(number, type)
         } else if (type === '+') {
             onAdd(initialPrice);
-            console.log(number, type)
         }
     }
 
@@ -37,7 +35,7 @@ const CartCard = ({ book, onAdd, onSubstract }) => {
 
     return <View style={CartCardStyle.cartCard}>
         <Image
-            source={{ uri: 'data:image/jpg;base64,' + book.image.data }}
+            source={{ uri: book.image }}
             style={{ height: 80, width: 80 }}
         />
         <View style={{ height: 100, marginLeft: 10, paddingVertical: 5, flex: 1 }}>
@@ -47,8 +45,8 @@ const CartCard = ({ book, onAdd, onSubstract }) => {
         </View>
         <View style={{ marginEnd: 35 }}>
             <View style={CartCardStyle.actionBtn}>
-                <Counter start={book.quantity} minusIcon={minusIcon} plusIcon={plusIcon} countTextStyle={{ color: COLORS.purple }}
-                    buttonStyle={{ borderColor: 'transparent' }} onChange={changeQuantity.bind(this)} min={1} />
+                <Counter start={book.cartQuantity} minusIcon={minusIcon} plusIcon={plusIcon} countTextStyle={{ color: COLORS.purple }}
+                    buttonStyle={{ borderColor: 'transparent' }} onChange={changeQuantity.bind(this)} min={1} max={book.quantity} />
             </View>
         </View>
     </View>;

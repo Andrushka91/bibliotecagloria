@@ -53,6 +53,15 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         textAlign: 'center',
         borderRadius: 16,
+    },
+    outOfStock:{
+        width: 150,
+        height: 50,
+        backgroundColor: 'gray',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        borderRadius: 16,
     }
 });
 export default styles;

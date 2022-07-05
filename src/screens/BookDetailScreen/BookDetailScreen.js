@@ -24,13 +24,14 @@ const BookDetailScreen = ({ route, navigation }) => {
   const initialPrice = book.price;
 
   function changeQuantity(number, type) {
-    console.log("book.INITIAL-quantity", book.quantity)
     if (type === '-') {
-      book.quantity -= 1;
+      book.cartQuantity -= 1;
       book.price = book.price - initialPrice;
     } else if (type === '+') {
-      book.quantity += 1;
-      book.price = book.price + initialPrice;
+      if (book.cartQuantity <= book.quantity) {
+        book.cartQuantity += 1;
+        book.price = book.price + initialPrice;
+      }
     }
   }
   const minusIcon = (isDisabled) => {
@@ -48,7 +49,7 @@ const BookDetailScreen = ({ route, navigation }) => {
         <Icon name="shopping-cart" size={28} onPress={() => navigation.navigate('CartScreen')} />
       </View>
       <View style={styles.imageContainer}>
-        <Image source={{ uri: 'data:image/jpg;base64,' + book.image.data }} style={{ resizeMode: 'contain', flex: 1, width: 400 }} />
+        <Image source={{ uri: book.image }} style={{ resizeMode: 'contain', flex: 1, width: 400 }} />
       </View>
       <View style={styles.detailsContainer}>
         <View
@@ -80,13 +81,20 @@ const BookDetailScreen = ({ route, navigation }) => {
           <View style={{ marginTop: 20, flexDirection: 'row', justifyContent: 'space-between' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
               <Counter start={1} minusIcon={minusIcon} plusIcon={plusIcon} countTextStyle={{ color: COLORS.purple }}
-                buttonStyle={{ borderColor: 'transparent' }} onChange={changeQuantity.bind(this)} min={1} />
+                buttonStyle={{ borderColor: 'transparent' }} onChange={changeQuantity.bind(this)} min={1} max={book.quantity} />
             </View>
-            <TouchableOpacity onPress={() => addBookAndUpdateList(book)}>
-              <View style={styles.buyBtn}>
-                <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Adaugă în coș</Text>
+
+            {book.quantity > 0 ? (
+              <TouchableOpacity onPress={() => addBookAndUpdateList(book)}>
+                <View style={styles.buyBtn}>
+                  <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Adaugă în coș</Text>
+                </View>
+              </TouchableOpacity>
+            ) :
+              <View style={styles.outOfStock}>
+                <Text style={{ color: 'white', fontSize: 18, fontFamily: 'AllerLight' }}>Stoc epuizat</Text>
               </View>
-            </TouchableOpacity>
+            }
           </View>
         </View>
       </View>

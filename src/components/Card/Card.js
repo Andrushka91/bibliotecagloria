@@ -25,7 +25,7 @@ const Card = ({ book, navigation }) => {
                 </View>
                 <View style={{ height: 100, alignItems: 'center' }}>
                     <Image
-                        source={{ uri: 'data:image/jpg;base64,' + book.image.data }}
+                        source={{ uri: book.image }}
                         style={{ resizeMode: 'contain', flex: 1, width: 100 }} />
                 </View>
                 <Text style={{ fontWeight: 'bold', fontSize: 14, marginTop: 10 }}>

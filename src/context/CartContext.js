@@ -127,11 +127,10 @@ const createOrder = (dispatch) => async (items, totalPrice) => {
     const userEmail = await AsyncStorage.getItem('email');
     let cartItems = [];
     items.forEach((item) => {
-        cartItems.push({ id: item._id, quantity: item.quantity })
+        cartItems.push({ id: item._id, cartQuantity: item.cartQuantity })
     })
 
     const orderId = uuid();
-    console.log("orderId:", orderId)
     await booksApi.post('/order', { orderId, userName, userEmail, totalPrice, cartItems });
 
     const key = userEmail + '_books';
