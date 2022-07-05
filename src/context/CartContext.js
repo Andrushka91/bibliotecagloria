@@ -60,7 +60,7 @@ const emptyCart = dispatch => async () => {
 //   }
 // }
 
-const addItemToCart = (dispatch) => async (book) => {
+const addItemToCart = (dispatch) => async (book, outOfStockCallBack) => {
     const email = await AsyncStorage.getItem('email');
     const key = email + '_books';
     try {
@@ -72,11 +72,33 @@ const addItemToCart = (dispatch) => async (book) => {
             ToastAndroid.show("Carte adăugată cu success in coș!", ToastAndroid.SHORT);
         } else {
             let books = JSON.parse(data);
-            let isInTheCartCount = checkBookInTheCart(book, books);
-            if (isInTheCartCount === 0) {
-                books.push(book);
+            let sameBook, outOfStock;
+
+            books.forEach((e) => {
+                if (e._id === book._id) {
+                    sameBook = true;
+                    if (e.cartQuantity < book.quantity) {
+                        outOfStock = false;
+                        e.cartQuantity += book.cartQuantity;
+                        e.price = e.price + book.price;
+                    } else {
+                        ToastAndroid.show("Stock epuizat, cartea nu s-a adăugat in coș. Încearcă mai tarziu.", ToastAndroid.SHORT);
+                        outOfStockCallBack();
+                        outOfStock = true;
+                        dispatch({ type: 'add_item_cart', payload: books })
+                    }
+                } else {
+                    sameBook = false;
+                    outOfStock = false;
+                }
+            })
+            if (sameBook && !outOfStock) {
                 await AsyncStorage.setItem(key, JSON.stringify(books));
-            } else {
+                ToastAndroid.show("Carte adăugată cu success in coș!", ToastAndroid.SHORT);
+                dispatch({ type: 'add_item_cart', payload: books })
+            }
+            if (!sameBook) {
+                books.push(book);
                 await AsyncStorage.setItem(key, JSON.stringify(books));
                 ToastAndroid.show("Carte adăugată cu success in coș!", ToastAndroid.SHORT);
                 dispatch({ type: 'add_item_cart', payload: books })
@@ -85,18 +107,6 @@ const addItemToCart = (dispatch) => async (book) => {
     } catch (err) {
         console.log(err);
     }
-}
-
-const checkBookInTheCart = (item, books) => {
-    let count = 0;
-    books.forEach((e) => {
-        if (e._id === item._id) {
-            e.quantity += item.quantity;
-            count += 1;
-            e.price = e.price + item.price;
-        }
-    })
-    return count;
 }
 
 

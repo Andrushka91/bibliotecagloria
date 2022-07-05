@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { AntDesign } from '@expo/vector-icons';
 import { useContext } from "react";
 import { Image, Text, View } from "react-native";
@@ -14,9 +15,16 @@ import styles from './styles';
 const BookDetailScreen = ({ route, navigation }) => {
   const { state } = useContext(BooksContext);
   const { addItemToCart } = useContext(CartContext);
+  const [outOfStock, setOutOfStock] = useState(false);
 
   function addBookAndUpdateList(book) {
-    addItemToCart(book);
+    if (!outOfStock) {
+      addItemToCart(book, outOfStockCallBack);
+    }
+  }
+
+  function outOfStockCallBack() {
+    setOutOfStock(true);
   }
 
   const _id = route.params._id
@@ -84,7 +92,7 @@ const BookDetailScreen = ({ route, navigation }) => {
                 buttonStyle={{ borderColor: 'transparent' }} onChange={changeQuantity.bind(this)} min={1} max={book.quantity} />
             </View>
 
-            {book.quantity > 0 ? (
+            {book.quantity > 0 && !outOfStock ? (
               <TouchableOpacity onPress={() => addBookAndUpdateList(book)}>
                 <View style={styles.buyBtn}>
                   <Text style={{ color: COLORS.white, fontSize: 18, fontFamily: 'AllerLight' }}>Adaugă în coș</Text>

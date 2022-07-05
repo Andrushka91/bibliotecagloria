@@ -52,9 +52,9 @@ const CartScreen = ({ navigation }) => {
         cartItems[index].price = initialPrice * cartItems[index].cartQuantity;
         updateItemsCart(cartItems);
     }
-    const onSubstractQuantity = ( index, initialPrice) => {
-        console.log("CartScreenStateOnSub1:")
+    const onSubstractQuantity = (index, initialPrice) => {
         const cartItems = [...state.books];
+        console.log("onSubstractQuantity:",cartItems[index].cartQuantity)
         cartItems[index].cartQuantity -= 1;
         cartItems[index].price -= initialPrice;
         updateItemsCart(cartItems);
@@ -80,8 +80,8 @@ const CartScreen = ({ navigation }) => {
                 renderItem={
                     ({ item, index }) =>
                         <CartCard
-                            onAdd={(initialPrice) => onAddQuantity(item, index, initialPrice)}
-                            onSubstract={(initialPrice) => onSubstractQuantity(item, index, initialPrice)}
+                            onAdd={(initialPrice) => onAddQuantity(index, initialPrice)}
+                            onSubstract={(initialPrice) => onSubstractQuantity(index, initialPrice)}
                             index={index}
                             book={item}
                         />
